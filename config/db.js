@@ -1,10 +1,8 @@
 var mongoose = require('mongoose'),
   bcrypt = require('bcrypt'),
-  SALT_WORK_FACTOR = 10;
-
-var uristring = 'mongodb://localhost/payments';
-
-var mongoOptions = { };
+  SALT_WORK_FACTOR = 10,
+  uristring = 'mongodb://localhost/payments',
+  mongoOptions = { };
 
 mongoose.connect(uristring, mongoOptions, function (err, res) {
   if (err) {
@@ -27,7 +25,7 @@ var Category = new Schema({
   name: { type: String, required: true }
 });
 
-var Record = new Schema({
+var Payment = new Schema({
   user_id: { type: Schema.ObjectId, ref: 'User', required: true },
   category: { type: String, required: true },
   amount: { type: Number, required: true },
@@ -60,12 +58,12 @@ User.methods.comparePassword = function(candidatePassword, cb) {
   });
 };
 
-var userModel = mongoose.model('User', User);
-var recordModel = mongoose.model('Record', Record);
-var categoryModel = mongoose.model('Category', Category);
+var userModel = mongoose.model('User', User),
+  paymentModel = mongoose.model('Payment', Payment),
+  categoryModel = mongoose.model('Category', Category);
 
 
 // Export Models
 exports.userModel = userModel;
-exports.recordModel = recordModel;
+exports.paymentModel = paymentModel;
 exports.categoryModel = categoryModel;

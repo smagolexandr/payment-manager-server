@@ -8,9 +8,9 @@ var express = require('express'),
 
 //Route
 var routes = {}
-routes.records = require('./route/records.js')
-routes.categories = require('./route/categories.js')
-routes.users = require('./route/users.js')
+routes.payment = require('./route/payment.js')
+routes.category = require('./route/category.js')
+routes.user = require('./route/user.js')
 
 app.use(express.json())
 app.use(express.urlencoded())
@@ -30,25 +30,25 @@ app.all('*', function(req, res, next) {
   next()
 })
 
-app.post('/login', routes.users.login)
+app.post('/login', routes.user.login)
 
-app.post('/register', routes.users.register)
+app.post('/register', routes.user.register)
 
-app.get('/logout', pass.userIsAuthenticated, routes.users.logout)
+app.get('/logout', pass.userIsAuthenticated, routes.user.logout)
 
 //Create new Record
-app.post('/users/:userId/records', pass.userIsAuthenticated, routes.records.create)
+app.post('/user/:userId/payment', pass.userIsAuthenticated, routes.payment.create)
 
 //Delete Record
-app.delete('/users/:userId/records/:recordId', pass.userIsAuthenticated, routes.records.delete)
+app.delete('/user/:userId/payment/:paymentId', pass.userIsAuthenticated, routes.payment.delete)
 
 //Get all categories
-app.get('/categories', pass.userIsAuthenticated, routes.categories.list)
+app.get('/category', pass.userIsAuthenticated, routes.category.list)
 
 //Create new category
-app.post('/categories', pass.userIsAuthenticated, routes.categories.create)
+app.post('/category', pass.userIsAuthenticated, routes.category.create)
 
 //Delete Category
-app.delete('/categories/:categoryId', pass.userIsAuthenticated, routes.categories.delete)
+app.delete('/category/:categoryId', pass.userIsAuthenticated, routes.category.delete)
 
 app.listen(3000)

@@ -21,13 +21,13 @@ var User = new Schema({
 });
 
 var Category = new Schema({
-  user_id: { type: Schema.ObjectId, ref: 'User', required: true },
-  name: { type: String, required: true }
+  user: { type: Schema.ObjectId, ref: 'User', required: true },
+  title: { type: String, required: true }
 });
 
 var Payment = new Schema({
-  user_id: { type: Schema.ObjectId, ref: 'User', required: true },
-  category: { type: String, required: true },
+  user: { type: Schema.ObjectId, ref: 'User', required: true },
+  category: { type: Schema.ObjectId, ref: 'Category', required: true },
   amount: { type: Number, required: true },
   date: { type: Date, default: Date.now },
   description: { type: String }

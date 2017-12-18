@@ -1,3 +1,4 @@
+
 var express = require('express'),
   app = express(),
   db = require('./config/db'),
@@ -35,6 +36,11 @@ app.post('/login', routes.user.login)
 app.post('/register', routes.user.register)
 
 app.get('/logout', pass.userIsAuthenticated, routes.user.logout)
+
+//Get all categories
+app.get('/payment', pass.userIsAuthenticated, routes.payment.list)
+
+app.get('/category/monthly', pass.userIsAuthenticated, routes.payment.monthly)
 
 //Create new Record
 app.post('/user/:userId/payment', pass.userIsAuthenticated, routes.payment.create)

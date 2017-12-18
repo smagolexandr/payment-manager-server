@@ -1,7 +1,7 @@
 var db = require('../config/db.js');
 
 exports.list = function(req, res) {
-  db.categoryModel.find({user_id: req.user._id}, function(err, results) {
+  db.categoryModel.find({user: req.user._id}, function(err, results) {
     if (err) {
       console.log(err);
       return res.send(400);
@@ -12,13 +12,13 @@ exports.list = function(req, res) {
 }
 
 exports.create = function(req, res) {
-  if (req.body.name === undefined) {
+  if (req.body.title === undefined) {
     return res.json(400);
   }
 
   var category = new db.categoryModel();
-  category.name = req.body.name;
-  category.user_id = req.user._id;
+  category.title = req.body.title;
+  category.user = req.user._id;
 
   category.save(function(err) {
     if (err) {
@@ -37,7 +37,7 @@ exports.delete = function(req, res) {
 
   var categoryId = req.params.categoryId;
 
-  db.categoryModel.findOne({user_id: req.user._id, _id: categoryId}, function(err, result) {
+  db.categoryModel.findOne({user: req.user._id, _id: categoryId}, function(err, result) {
     if (err) {
       console.log(err);
       return res.send(400);

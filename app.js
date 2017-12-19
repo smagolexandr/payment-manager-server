@@ -1,7 +1,8 @@
-
 var express = require('express'),
   app = express(),
   db = require('./config/db'),
+  cors = require('cors'),
+  bodyParser = require('body-parser')
   pass = require('./config/pass'),
   passport = require('passport'),
   cookieParser = require('cookie-parser'),
@@ -13,23 +14,14 @@ routes.payment = require('./route/payment.js')
 routes.category = require('./route/category.js')
 routes.user = require('./route/user.js')
 
+app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
-// app.use(express.methodOverride());
 app.use(cookieSession({ secret: 'itisrealsecret' }))
 app.use(passport.initialize())
 app.use(passport.session())
 
-
-app.all('*', function(req, res, next) {
-  res.set('Access-Control-Allow-Origin', 'http://localhost')
-  res.set('Access-Control-Allow-Credentials', true)
-  res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT')
-  res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')
-  if ('OPTIONS' == req.method) return res.send(200)
-  next()
-})
 
 app.post('/login', routes.user.login)
 

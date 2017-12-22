@@ -2,15 +2,18 @@ var mongoose = require('mongoose'),
   bcrypt = require('bcrypt'),
   SALT_WORK_FACTOR = 10,
   uristring = 'mongodb://localhost/payments',
-  mongoOptions = { };
+  mongoOptions = {
+    useMongoClient: true
+  };
 
-mongoose.connect(uristring, mongoOptions, function (err, res) {
+mongoose.connect(uristring, mongoOptions,
+  function (err, res) {
   if (err) {
     console.log('ERROR connecting to: ' + uristring + '. ' + err);
   } else {
     console.log('Successfully connected to: ' + uristring);
   }
-});
+})
 
 var Schema = mongoose.Schema;
 

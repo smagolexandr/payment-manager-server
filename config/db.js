@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
   bcrypt = require('bcrypt'),
   SALT_WORK_FACTOR = 10,
+  // uristring = 'mongodb://mongo/payments',
   uristring = 'mongodb://localhost/payments',
   mongoOptions = {
     useMongoClient: true
@@ -20,7 +21,10 @@ var Schema = mongoose.Schema;
 // User schema
 var User = new Schema({
   username: { type: String, required: true, unique: true },
-  password: { type: String, required: true}
+  firstName: { type: String},
+  lastName: { type: String },
+  password: { type: String, required: true},
+  token: { type: String, required: false, unique: true }
 });
 
 var Category = new Schema({

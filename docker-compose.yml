@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+   mongodb:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+     - "27017:27017"
+#
+#   backend:
+#     container_name: pm_backend
+#     build: .
+#     volumes:
+#      - ./:/usr/src/app
+#     ports:
+#      - '8080:8080'
+#     links:
+#      - mongodb
+#     environment:
+#      - NODE_ENV=development
+#
+#   frontend:
+#     container_name: pm_frontend
+#     build:
+#      context: ./../payment-manager-frontend
+#     volumes:
+#      - ./../payment-manager-frontend:/usr/src/app
+#     ports:
+#      - '3000:3000'

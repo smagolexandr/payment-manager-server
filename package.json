@@ -1,10 +1,11 @@
 {
   "name": "payment_manager",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "app.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "node app.js"
   },
   "author": "SmagOlexandr",
   "license": "ISC",
@@ -18,7 +19,8 @@
     "method-override": "^2.3.10",
     "mongoose": "^4.13.2",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.13.3"

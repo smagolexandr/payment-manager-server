@@ -49,4 +49,4 @@ app.post('/category', pass.userIsAuthenticated, routes.category.create)
 //Delete Category
 app.delete('/category/:categoryId', pass.userIsAuthenticated, routes.category.delete)
 
-app.listen(3000)
+app.listen(8080)

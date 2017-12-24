@@ -11,6 +11,8 @@ exports.register = function(req, res) {
   }
 
   var user = new db.userModel()
+  user.firstName = req.body.firstName
+  user.lastName = req.body.lastName
   user.username = req.body.username
   user.password = req.body.password
 
@@ -24,25 +26,12 @@ exports.register = function(req, res) {
   })
 }
 
-exports.login = function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err) }
-    if (!user) {
-      return res.status(400).send({message: "Bad User"})
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        return next(err)
-      }
-      return res.send({
-        user: {
-          _id: user._id,
-          username: user.username
-        }
-      })
-    })
-  })(req, res, next)
-}
+exports.login =  passport.authenticate('local', { session: false }),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    return (req.user.username);
+  }
 
 exports.logout = function(req, res) {
   req.session = null

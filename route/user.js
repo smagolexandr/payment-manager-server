@@ -1,5 +1,5 @@
-var passport = require('passport')
-var db = require('../config/db')
+const passport = require('passport'),
+  db = require('../config/db')
 
 exports.register = function(req, res) {
   if (req.user) {
@@ -26,15 +26,22 @@ exports.register = function(req, res) {
   })
 }
 
-exports.login =  passport.authenticate('local', { session: false }),
-  function(req, res) {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-    return (req.user.username);
-  }
-
-exports.logout = function(req, res) {
-  req.session = null
-  req.logout()
-  res.sendStatus(200)
-}
+exports.login = function(req, res, next) {
+  passport.authenticate('local', { "session": false }, function(err, user, info) {
+    if (err) { return next(err) }
+    if (!user) {;
+      return res.json(400, {message: "Bad User"});
+    }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.send({'user':
+        {
+          'token': user._id,
+          'firstName': user.firstName,
+          'lastName': user.lastName,
+          'username': user.username
+        }
+      });
+    });
+  })(req, res, next);
+};

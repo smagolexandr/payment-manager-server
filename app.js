@@ -4,9 +4,7 @@ var express = require('express'),
   cors = require('cors'),
   bodyParser = require('body-parser')
   pass = require('./config/pass'),
-  passport = require('passport'),
-  cookieParser = require('cookie-parser'),
-  cookieSession = require('cookie-session')
+  passport = require('passport')
 
 //Route
 var routes = {}
@@ -17,17 +15,12 @@ routes.user = require('./route/user.js')
 app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cookieParser())
-app.use(cookieSession({ secret: 'itisrealsecret' }))
 app.use(passport.initialize())
-app.use(passport.session())
 
 
 app.post('/login', routes.user.login)
 
 app.post('/register', routes.user.register)
-
-app.get('/logout', pass.userIsAuthenticated, routes.user.logout)
 
 //Get all categories
 app.get('/payment', pass.userIsAuthenticated, routes.payment.list)

@@ -1,7 +1,7 @@
 var db = require('../config/db.js');
 
 exports.list = function(req, res) {
-  db.paymentModel.find({user: req.user._id}, function(err, results) {
+  db.paymentModel.find({user: req.get('X-AUTH-TOKEN')}, function(err, results) {
     if (err) {
       console.log(err);
       return res.send(400);
@@ -16,7 +16,7 @@ exports.monthly = function(req, res) {
   db.paymentModel.aggregate([
     {
       $match: {
-        user: req.user._id
+        user: req.get('X-AUTH-TOKEN')
       }
     },
     {
@@ -36,16 +36,12 @@ exports.monthly = function(req, res) {
 }
 
 exports.create = function(req, res) {
-  if (req.body.amount === undefined || isNaN(Number(req.body.amount)) || req.body.category === undefined || req.body.date === undefined || req.user === undefined) {
+  if (req.body.amount === undefined || isNaN(Number(req.body.amount)) || req.body.category === undefined || req.body.date === undefined) {
     return res.json(400, {message:"Bad Data"});
   }
 
-  var userId = req.params.userId;
-
-  //TODO Check if user_id == account.user_id before adding the payments
-
   var payment = new db.paymentModel();
-  payment.user = req.user._id;
+  payment.user = req.get('X-AUTH-TOKEN');
   payment.amount = req.body.amount;
   payment.category	= req.body.category;
   payment.date	= req.body.date;
@@ -61,13 +57,13 @@ exports.create = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-  if (req.params.userId === undefined || req.params.paymentId === undefined) {
+  if (req.params.paymentId === undefined) {
     return res.json(400, {message:"Bad Data"});
   }
 
   var paymentId = req.params.paymentId;
 
-  db.paymentModel.findOne({_id: paymentId, user: req.user._id}, function(err, payment) {
+  db.paymentModel.findOne({_id: paymentId, user: req.get('X-AUTH-TOKEN')}, function(err, payment) {
     if (err) {
       console.log(err);
       return res.send(400);

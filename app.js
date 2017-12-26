@@ -28,7 +28,7 @@ app.get('/payment', pass.userIsAuthenticated, routes.payment.list)
 app.get('/category/monthly', pass.userIsAuthenticated, routes.payment.monthly)
 
 //Create new Record
-app.post('/user/:userId/payment', pass.userIsAuthenticated, routes.payment.create)
+app.post('/payment', pass.userIsAuthenticated, routes.payment.create)
 
 //Delete Record
 app.delete('/user/:userId/payment/:paymentId', pass.userIsAuthenticated, routes.payment.delete)

@@ -7,17 +7,17 @@ services:
     ports:
      - "27017:27017"
 
-   backend:
-     container_name: pm_backend
-     build: .
-     volumes:
-      - ./:/usr/src/app
-     ports:
-      - '8080:8080'
-     links:
-      - mongodb
-     environment:
-      - NODE_ENV=development
+#   backend:
+#     container_name: pm_backend
+#     build: .
+#     volumes:
+#      - ./:/usr/src/app
+#     ports:
+#      - '8080:8080'
+#     links:
+#      - mongodb
+#     environment:
+#      - NODE_ENV=development
 #
 #   frontend:
 #     container_name: pm_frontend
